@@ -3,32 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ôn Tập Module 1 - Tin Học Cơ Bản</title>
+  <title>Hệ Thống Ôn Tập Trắc Nghiệm Tin Học</title>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 750px; margin: 30px auto; padding: 0 15px; background: #f4f6f8; color: #333; }
-    .quiz-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
-    .question-title { font-size: 1.15rem; font-weight: 600; margin-bottom: 15px; line-height: 1.5; }
-    .options { list-style: none; padding: 0; }
+    * { box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 760px; margin: 30px auto; padding: 0 16px; background: #f1f5f9; color: #1e293b; }
+    .quiz-card { background: white; padding: 28px; border-radius: 14px; box-shadow: 0 4px 14px rgba(0,0,0,0.06); }
+    h2 { margin-top: 0; color: #0f172a; text-align: center; }
+    .module-list { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+    .btn-module { width: 100%; padding: 16px; background: #ffffff; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1.05rem; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; }
+    .btn-module:hover { border-color: #4f46e5; background: #eef2ff; color: #4f46e5; transform: translateY(-1px); }
+    .btn-module span.count { font-size: 0.85rem; font-weight: normal; background: #f1f5f9; padding: 4px 10px; border-radius: 20px; color: #64748b; }
+    .question-title { font-size: 1.15rem; font-weight: 600; margin-bottom: 16px; line-height: 1.5; color: #0f172a; }
+    .options { list-style: none; padding: 0; margin: 0; }
     .options li { margin-bottom: 10px; }
-    .btn-option { width: 100%; text-align: left; padding: 12px 16px; border: 1px solid #dcdfe6; border-radius: 8px; background: white; cursor: pointer; font-size: 1rem; transition: 0.2s; }
-    .btn-option:hover { background: #eef2ff; border-color: #6366f1; }
+    .btn-option { width: 100%; text-align: left; padding: 13px 18px; border: 1.5px solid #cbd5e1; border-radius: 8px; background: white; cursor: pointer; font-size: 1rem; transition: 0.15s; line-height: 1.4; }
+    .btn-option:hover { background: #f8fafc; border-color: #94a3b8; }
     .btn-option.correct { background: #dcfce7 !important; border-color: #22c55e !important; color: #15803d !important; font-weight: 600; }
     .btn-option.wrong { background: #fee2e2 !important; border-color: #ef4444 !important; color: #b91c1c !important; }
-    .feedback { margin-top: 15px; padding: 12px; border-radius: 8px; font-size: 0.95rem; display: none; }
-    .feedback.show { display: block; background: #f8fafc; border-left: 4px solid #6366f1; }
-    .controls { margin-top: 20px; display: flex; justify-content: space-between; align-items: center; }
-    .btn-next { padding: 10px 20px; background: #4f46e5; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: 1rem; }
+    .feedback { margin-top: 16px; padding: 14px; border-radius: 8px; font-size: 0.95rem; display: none; line-height: 1.4; }
+    .feedback.show { display: block; background: #f8fafc; border-left: 4px solid #4f46e5; }
+    .controls { margin-top: 22px; display: flex; justify-content: space-between; align-items: center; }
+    .btn-next, .btn-primary { padding: 10px 22px; background: #4f46e5; color: white; border: none; border-radius: 7px; cursor: pointer; font-weight: 600; font-size: 0.95rem; }
     .btn-next:disabled { background: #cbd5e1; cursor: not-allowed; }
+    .btn-back { background: none; border: none; color: #4f46e5; cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 0; }
+    .btn-back:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
 
 <div class="quiz-card">
-  <div id="quiz-container">
-    <div style="display:flex; justify-content:space-between; color:#6b7280; font-size:0.95rem; margin-bottom:12px;">
-      <span id="progress">Câu 1/29</span>
-      <span id="score">Điểm: 0</span>
+  <!-- MÀN HÌNH CHỌN MODULE -->
+  <div id="menu-view">
+    <h2>Chọn Bài Ôn Tập</h2>
+    <p style="text-align: center; color: #64748b; margin-top: -6px; margin-bottom: 20px;">Trọn bộ 6 Module Kiến thức Tin học</p>
+    <div class="module-list">
+      <button class="btn-module" onclick="startQuiz('mod1')">
+        <span>📖 Module 1: Hiểu biết về CNTT cơ bản</span>
+        <span class="count">29 câu</span>
+      </button>
+      <button class="btn-module" onclick="startQuiz('mod2')">
+        <span>💻 Module 2: Sử dụng máy tính cơ bản (Windows)</span>
+        <span class="count">17 câu</span>
+      </button>
+      <button class="btn-module" onclick="startQuiz('mod3')">
+        <span>📝 Module 3: Soạn thảo văn bản (MS Word)</span>
+        <span class="count">28 câu</span>
+      </button>
+      <button class="btn-module" onclick="startQuiz('mod4')">
+        <span>📊 Module 4: Bảng tính điện tử (MS Excel)</span>
+        <span class="count">23 câu</span>
+      </button>
+      <button class="btn-module" onclick="startQuiz('mod5')">
+        <span>📽️ Module 5: Trình chiếu cơ bản (MS PowerPoint)</span>
+        <span class="count">13 câu</span>
+      </button>
+      <button class="btn-module" onclick="startQuiz('mod6')">
+        <span>🌐 Module 6: Sử dụng Internet cơ bản</span>
+        <span class="count">15 câu</span>
+      </button>
     </div>
+  </div>
+
+  <!-- MÀN HÌNH THỰC HIỆN TRẮC NGHIỆM -->
+  <div id="quiz-view" style="display: none;">
+    <div style="display:flex; justify-content:space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px;">
+      <button class="btn-back" onclick="backToMenu()">⬅ Danh sách bài</button>
+      <div style="color:#64748b; font-size:0.95rem;">
+        <span id="progress">Câu 1</span> | <span id="score">Điểm: 0</span>
+      </div>
+    </div>
+    
     <div class="question-title" id="question-text">Đang tải...</div>
     <ul class="options" id="options-list"></ul>
     <div class="feedback" id="feedback-box"></div>
@@ -40,253 +84,233 @@
 </div>
 
 <script>
-const quizData = [
-  {
-    q: "1MB (Megabyte) bằng:",
-    options: ["1024 GB", "1024 KB", "1000 KB", "1000 B"],
-    correct: 1,
-    explain: "1 MB = 1024 KB = 2^10 KB."
-  },
-  {
-    q: "1GB (Gigabyte) bằng:",
-    options: ["2^10 KB", "2^20 KB", "2^30 KB", "2^40 KB"],
-    correct: 1,
-    explain: "1 GB = 1024 MB = 1024 * 1024 KB = 2^20 KB."
-  },
-  {
-    q: "1 bit dùng mấy ký tự nhị phân để biểu diễn:",
-    options: ["1", "2", "3", "4"],
-    correct: 0,
-    explain: "1 bit chỉ biểu diễn 1 ký tự nhị phân duy nhất (0 hoặc 1)."
-  },
-  {
-    q: "1 byte bằng:",
-    options: ["2 bit", "4 bit", "7 bit", "8 bit"],
-    correct: 3,
-    explain: "1 Byte = 8 Bit."
-  },
-  {
-    q: "Trong các đơn vị đo thông tin sau, đơn vị đo thông tin nào nhỏ nhất?",
-    options: ["Byte", "Bit", "Kilobyte", "Megabyte"],
-    correct: 1,
-    explain: "Bit là đơn vị đo lường thông tin nhỏ nhất."
-  },
-  {
-    q: "Trong các đơn vị đo thông tin sau, đơn vị đo thông tin nào lớn nhất?",
-    options: ["Byte", "Bit", "Kilobyte", "Megabyte"],
-    correct: 3,
-    explain: "Thứ tự từ nhỏ đến lớn: Bit < Byte < Kilobyte < Megabyte."
-  },
-  {
-    q: "Khi mất điện, các thông tin lưu trữ trong các phần nào sau đây bị mất:",
-    options: ["RAM", "ROM", "CPU", "Đĩa cứng"],
-    correct: 0,
-    explain: "RAM là bộ nhớ tạm thời (volatile memory), mất dữ liệu khi ngắt điện."
-  },
-  {
-    q: "Bộ nhớ trong bao gồm:",
-    options: ["RAM", "ROM", "RAM và ROM", "CPU"],
-    correct: 2,
-    explain: "Bộ nhớ trong của máy tính gồm RAM và ROM."
-  },
-  {
-    q: "Đâu là thiết bị thuộc Bộ nhớ ngoài?",
-    options: ["RAM", "ROM", "CPU", "Đĩa cứng."],
-    correct: 3,
-    explain: "Đĩa cứng (HDD/SSD) thuộc bộ nhớ ngoài."
-  },
-  {
-    q: "Các thiết bị nào sau đây là thiết bị nhập của máy tính?",
-    options: ["Máy in", "Máy chiếu", "Webcam", "Màn hình"],
-    correct: 2,
-    explain: "Webcam là thiết bị nhập dữ liệu hình ảnh vào máy tính."
-  },
-  {
-    q: "Các thiết bị nào sau đây là thiết bị xuất của máy tính?",
-    options: ["Bàn phím", "Chuột", "Máy quét", "Màn hình"],
-    correct: 3,
-    explain: "Màn hình xuất dữ liệu hình ảnh cho người dùng xem."
-  },
-  {
-    q: "VoIP là tên viết tắt của:",
-    options: ["Dịch vụ tin nhắn ngắn", "Tin nhắn tức thời", "Đàm thoại qua giao thức Internet", "Thư điện tử"],
-    correct: 2,
-    explain: "VoIP: Voice over Internet Protocol."
-  },
-  {
-    q: "SMS là tên viết tắt của:",
-    options: ["Dịch vụ tin nhắn ngắn", "Tin nhắn tức thời", "Đàm thoại qua giao thức Internet", "Thư điện tử"],
-    correct: 0,
-    explain: "SMS: Short Message Service."
-  },
-  {
-    q: "IM là tên viết tắt của:",
-    options: ["Dịch vụ tin nhắn ngắn", "Tin nhắn tức thời", "Đàm thoại qua giao thức Internet", "Thư điện tử"],
-    correct: 1,
-    explain: "IM: Instant Messaging."
-  },
-  {
-    q: "Mật khẩu của người dùng sau khi nhập vào máy tính sẽ tự động chuyển thành ký tự nào?",
-    options: ["*", "•", "* hoặc •", "* và •"],
-    correct: 2,
-    explain: "Mật khẩu thường được che thành ký tự sao (*) hoặc chấm đen (•)."
-  },
-  {
-    q: "ROM trên máy tính là:",
-    options: ["Bộ nhớ lưu trữ tạm thời", "Bộ nhớ ngoài", "Bộ nhớ chỉ đọc", "Thiết bị nhập"],
-    correct: 2,
-    explain: "ROM là Read-Only Memory (Bộ nhớ chỉ đọc)."
-  },
-  {
-    q: "CPU của máy tính là:",
-    options: ["Bộ xử lý trung tâm", "Bộ nhớ ngoài", "Thiết bị xuất", "Thiết bị nhập"],
-    correct: 0,
-    explain: "CPU là Central Processing Unit (Bộ xử lý trung tâm)."
-  },
-  {
-    q: "CPU của máy tính gồm mấy thành phần chính:",
-    options: ["1", "2", "3", "4"],
-    correct: 2,
-    explain: "CPU gồm 3 phần chính: Khối điều khiển (CU), khối số học/logic (ALU), và thanh ghi (Registers)."
-  },
-  {
-    q: "RAM trên máy tính là:",
-    options: ["Bộ nhớ lưu trữ tạm thời", "Bộ nhớ ngoài", "Bộ nhớ chỉ đọc", "Thiết bị nhập"],
-    correct: 0,
-    explain: "RAM là bộ nhớ truy xuất ngẫu nhiên, lưu trữ tạm thời khi chương trình đang chạy."
-  },
-  {
-    q: "Thông tin và dữ liệu trong máy tính được biểu diễn bằng:",
-    options: ["Số thập phân", "Các ký tự", "Số nhị phân", "Các ký hiệu Latin"],
-    correct: 2,
-    explain: "Dữ liệu trong máy tính được mã hóa dưới dạng số nhị phân (gồm các bit 0 và 1)."
-  },
-  {
-    q: "Đâu là tên của một phần mềm độc hại",
-    options: ["Spyware", "Skyware", "Spider", "Smoke"],
-    correct: 0,
-    explain: "Spyware là phần mềm độc hại chuyên theo dõi người dùng."
-  },
-  {
-    q: "Đâu là tên của Sâu máy tính",
-    options: ["Spyware", "Worm", "Spider", "Adware"],
-    correct: 1,
-    explain: "Worm là sâu máy tính lây lan qua mạng."
-  },
-  {
-    q: "Đâu là tên của Phần mềm quảng cáo",
-    options: ["Spyware", "Netware", "Skinware", "Adware"],
-    correct: 3,
-    explain: "Adware là Advertising-supported software."
-  },
-  {
-    q: "Đâu là tên của Phần mềm gián điệp",
-    options: ["Rabbit", "Worm", "Spyware", "Adware"],
-    correct: 2,
-    explain: "Spyware là phần mềm gián điệp."
-  },
-  {
-    q: "Dịch vụ tin nhắn ngắn SMS cho phép chúng ta sử dụng tối đa bao nhiêu ký tự cho một tin nhắn:",
-    options: ["140 ký tự", "150 ký tự", "160 ký tự", "170 ký tự"],
-    correct: 2,
-    explain: "Chuẩn tin nhắn SMS không dấu tối đa 160 ký tự."
-  },
-  {
-    q: "Đâu là một phần mềm máy tính?",
-    options: ["RAM", "CPU", "Microsoft Word", "VGA"],
-    correct: 2,
-    explain: "Microsoft Word là phần mềm; RAM, CPU, VGA là phần cứng."
-  },
-  {
-    q: "Đâu không phải là đơn vị đo thông tin",
-    options: ["Bit", "Byte", "Kilobyte", "Kilomet"],
-    correct: 3,
-    explain: "Kilomet là đơn vị đo khoảng cách."
-  },
-  {
-    q: "Trong các phần mềm sau, phần mềm nào là phần mềm ứng dụng?",
-    options: ["Windows 7", "Microsoft Excel", "Linux", "MAC - OS"],
-    correct: 1,
-    explain: "Microsoft Excel là phần mềm bảng tính ứng dụng; các phương án còn lại là hệ điều hành."
-  },
-  {
-    q: "Phần mềm nào dưới đây không phải là phần mềm hệ thống?",
-    options: ["Microsoft - DOS.", "Microsoft Windows.", "Linux", "Microsoft PowerPoint."],
-    correct: 3,
-    explain: "PowerPoint là phần mềm ứng dụng, không phải phần mềm hệ thống."
-  }
-];
+const allModules = {
+  mod1: [
+    { q: "1MB (Megabyte) bằng:", options: ["1024 GB", "1024 KB", "1000 KB", "1000 B"], correct: 1, explain: "1 MB = 1024 KB = 2^10 KB." },
+    { q: "1GB (Gigabyte) bằng:", options: ["2^10 KB", "2^20 KB", "2^30 KB", "2^40 KB"], correct: 1, explain: "1 GB = 1024 MB = 1024 * 1024 KB = 2^20 KB." },
+    { q: "1 bit dùng mấy ký tự nhị phân để biểu diễn:", options: ["1", "2", "3", "4"], correct: 0, explain: "1 bit chỉ biểu diễn 1 ký tự nhị phân duy nhất (0 hoặc 1)." },
+    { q: "1 byte bằng:", options: ["2 bit", "4 bit", "7 bit", "8 bit"], correct: 3, explain: "1 Byte = 8 Bit." },
+    { q: "Trong các đơn vị đo thông tin sau, đơn vị đo thông tin nào nhỏ nhất?", options: ["Byte", "Bit", "Kilobyte", "Megabyte"], correct: 1, explain: "Bit là đơn vị đo thông tin cơ bản nhỏ nhất." },
+    { q: "Trong các đơn vị đo thông tin sau, đơn vị đo thông tin nào lớn nhất?", options: ["Byte", "Bit", "Kilobyte", "Megabyte"], correct: 3, explain: "Megabyte lớn nhất trong 4 phương án trên." },
+    { q: "Khi mất điện, các thông tin lưu trữ trong các phần nào sau đây bị mất:", options: ["RAM", "ROM", "CPU", "Đĩa cứng"], correct: 0, explain: "RAM là bộ nhớ khả biến, sẽ mất dữ liệu khi nguồn điện ngắt." },
+    { q: "Bộ nhớ trong bao gồm:", options: ["RAM", "ROM", "RAM và ROM", "CPU"], correct: 2, explain: "Bộ nhớ trong bao gồm cả RAM và ROM." },
+    { q: "Đâu là thiết bị thuộc Bộ nhớ ngoài?", options: ["RAM", "ROM", "CPU", "Đĩa cứng."], correct: 3, explain: "Đĩa cứng là thiết bị lưu trữ thuộc bộ nhớ ngoài." },
+    { q: "Các thiết bị nào sau đây là thiết bị nhập của máy tính?", options: ["Máy in", "Máy chiếu", "Webcam", "Màn hình"], correct: 2, explain: "Webcam là thiết bị thu nhận hình ảnh đầu vào (Input)." },
+    { q: "Các thiết bị nào sau đây là thiết bị xuất của máy tính?", options: ["Bàn phím", "Chuột", "Máy quét", "Màn hình"], correct: 3, explain: "Màn hình hiển thị kết quả xử lý ra ngoài (Output)." },
+    { q: "VoIP là tên viết tắt của:", options: ["Dịch vụ tin nhắn ngắn", "Tin nhắn tức thời", "Đàm thoại qua giao thức Internet", "Thư điện tử"], correct: 2, explain: "VoIP: Voice over Internet Protocol." },
+    { q: "SMS là tên viết tắt của:", options: ["Dịch vụ tin nhắn ngắn", "Tin nhắn tức thời", "Đàm thoại qua giao thức Internet", "Thư điện tử"], correct: 0, explain: "SMS: Short Message Service." },
+    { q: "IM là tên viết tắt của:", options: ["Dịch vụ tin nhắn ngắn", "Tin nhắn tức thời", "Đàm thoại qua giao thức Internet", "Thư điện tử"], correct: 1, explain: "IM: Instant Messaging." },
+    { q: "Mật khẩu của người dùng sau khi nhập vào máy tính sẽ tự động chuyển thành ký tự nào?", options: ["*", "•", "* hoặc •", "* và •"], correct: 2, explain: "Mật khẩu thường được che bằng ký tự hoa thị (*) hoặc dấu chấm tròn (•)." },
+    { q: "ROM trên máy tính là:", options: ["Bộ nhớ lưu trữ tạm thời", "Bộ nhớ ngoài", "Bộ nhớ chỉ đọc", "Thiết bị nhập"], correct: 2, explain: "ROM là Read-Only Memory (Bộ nhớ chỉ đọc)." },
+    { q: "CPU của máy tính là:", options: ["Bộ xử lý trung tâm", "Bộ nhớ ngoài", "Thiết bị xuất", "Thiết bị nhập"], correct: 0, explain: "CPU: Central Processing Unit." },
+    { q: "CPU của máy tính gồm mấy thành phần chính:", options: ["1", "2", "3", "4"], correct: 2, explain: "CPU gồm 3 phần: ALU, CU và các Registers." },
+    { q: "RAM trên máy tính là:", options: ["Bộ nhớ lưu trữ tạm thời", "Bộ nhớ ngoài", "Bộ nhớ chỉ đọc", "Thiết bị nhập"], correct: 0, explain: "RAM lưu trữ dữ liệu tạm thời trong lúc máy tính hoạt động." },
+    { q: "Thông tin và dữ liệu trong máy tính được biểu diễn bằng:", options: ["Số thập phân", "Các ký tự", "Số nhị phân", "Các ký hiệu Latin"], correct: 2, explain: "Dữ liệu máy tính được xử lý bằng hệ nhị phân (0 và 1)." },
+    { q: "Đâu là tên của một phần mềm độc hại", options: ["Spyware", "Skyware", "Spider", "Smoke"], correct: 0, explain: "Spyware là phần mềm độc hại (Malware)." },
+    { q: "Đâu là tên của Sâu máy tính", options: ["Spyware", "Worm", "Spider", "Adware"], correct: 1, explain: "Worm là sâu máy tính." },
+    { q: "Đâu là tên của Phần mềm quảng cáo", options: ["Spyware", "Netware", "Skinware", "Adware"], correct: 3, explain: "Adware là Advertising-supported software." },
+    { q: "Đâu là tên của Phần mềm gián điệp", options: ["Rabbit", "Worm", "Spyware", "Adware"], correct: 2, explain: "Spyware là phần mềm gián điệp theo dõi thông tin." },
+    { q: "Dịch vụ tin nhắn ngắn SMS cho phép chúng ta sử dụng tối đa bao nhiêu ký tự cho một tin nhắn:", options: ["140 ký tự", "150 ký tự", "160 ký tự", "170 ký tự"], correct: 2, explain: "Chuẩn tin nhắn SMS không dấu có tối đa 160 ký tự." },
+    { q: "Đâu là một phần mềm máy tính?", options: ["RAM", "CPU", "Microsoft Word", "VGA"], correct: 2, explain: "Word là phần mềm ứng dụng; các phương án còn lại là linh kiện phần cứng." },
+    { q: "Đâu không phải là đơn vị đo thông tin", options: ["Bit", "Byte", "Kilobyte", "Kilomet"], correct: 3, explain: "Kilomet là đơn vị đo khoảng cách chiều dài." },
+    { q: "Trong các phần mềm sau, phần mềm nào là phần mềm ứng dụng?", options: ["Windows 7", "Microsoft Excel", "Linux", "MAC - OS"], correct: 1, explain: "Excel là phần mềm ứng dụng bảng tính." },
+    { q: "Phần mềm nào dưới đây không phải là phần mềm hệ thống?", options: ["Microsoft - DOS.", "Microsoft Windows.", "Linux", "Microsoft PowerPoint."], correct: 3, explain: "PowerPoint là phần mềm ứng dụng trình chiếu văn phòng." }
+  ],
+  mod2: [
+    { q: "Không có hệ điều hành nào trong các hệ điều hành sau:", options: ["Windows 7", "Windows 8", "Windows 9", "Windows 10"], correct: 2, explain: "Microsoft phát hành thẳng từ Windows 8/8.1 lên Windows 10, không có bản thương mại Windows 9." },
+    { q: "Tệp tin/thư mục trong hệ điều hành Windows 7 có thể có tối đa bao nhiêu ký tự?", options: ["254", "255", "256", "257"], correct: 1, explain: "Độ dài tối đa của tên tệp/thư mục trên hệ thống NTFS chuẩn là 255 ký tự." },
+    { q: "Hệ điều hành Windows 7 là hệ điều hành có:", options: ["Giao diện đồ họa", "Màn hình động", "Đa nhiệm", "Các ý trên đều đúng"], correct: 3, explain: "Windows 7 tích hợp đầy đủ giao diện đồ họa GUI, hỗ trợ đa nhiệm và hiệu ứng màn hình." },
+    { q: "Thao tác nào sau đây được dùng để chọn nhiều đối tượng không liên tiếp nhau trong hệ điều hành Windows?", options: ["Bấm chuột vào từng đối tượng.", "Bấm phải chuột vào từng đối tượng.", "Nhấn giữ phím Shift và bấm chuột vào từng đối tượng.", "Nhấn giữ phím Ctrl và bấm chuột vào từng đối tượng."], correct: 3, explain: "Giữ Ctrl chọn không liên tiếp; giữ Shift chọn dải đối tượng liên tiếp." },
+    { q: "Trong hệ điều hành Windows, muốn sao chép tệp tin ta thực hiện:", options: ["Chọn Edit\\Copy", "Nhấn tổ hợp phím Ctrl + C", "Bấm phải chuột vào tệp tin, chọn Copy.", "Đáp án a, b, c đều đúng."], correct: 3, explain: "Cả 3 cách đều cho phép sao chép tệp tin." },
+    { q: "Trong hệ điều hành Windows, muốn di chuyển tệp tin ta thực hiện:", options: ["Chọn Edit\\Cut", "Nhấn tổ hợp phím Ctrl + X", "Bấm phải chuột vào tệp tin, chọn Cut.", "Đáp án a, b, c đều đúng."], correct: 3, explain: "Cả 3 thao tác đều kích hoạt lệnh Cut để di chuyển tệp." },
+    { q: "Trong hệ điều hành Windows, muốn khôi phục đối tượng đã xóa, ta mở cửa sổ Recycle Bin, chuột phải vào đối tượng muốn khôi phục và chọn:", options: ["Restore", "Cut", "Delete", "Properties"], correct: 0, explain: "Restore dùng để phục hồi đối tượng trong Thùng rác về vị trí ban đầu." },
+    { q: "Trong hệ điều hành Windows, muốn xóa toàn bộ những file trong thùng rác, ta nháy chuột phải vào đối tượng Recycle Bin và chọn:", options: ["Open", "Empty Recycle Bin", "Rename", "Create Shortcuts"], correct: 1, explain: "Empty Recycle Bin dùng để dọn sạch toàn bộ dữ liệu trong thùng rác." },
+    { q: "Trong hệ điều hành Windows, muốn xóa một đối tượng trong thùng rác, ta mở cửa sổ Recycle Bin, nháy chuột phải vào đối tượng muốn xóa và chọn:", options: ["Restore", "Cut", "Delete", "Properties"], correct: 2, explain: "Chọn Delete trong Recycle Bin sẽ xóa vĩnh viễn tệp đó khỏi ổ đĩa." },
+    { q: "Muốn đổi tên cho thư mục\\tệp tin trong hệ điều hành Windows, ta chọn thư mục\\tệp tin cần đổi tên và thực hiện thao tác nào sau đây?", options: ["Chọn File\\Rename, nhập tên mới sau đó nhấn phím Enter.", "Nhấn phím F2, nhập tên mới sau đó nhấn phím Enter.", "Chọn phải chuột tại thư mục\\tệp tin, chọn Rename, nhập tên mới sau đó nhấn phím Enter.", "Đáp án a, b, c đều đúng."], correct: 3, explain: "Cả 3 thao tác trên đều cho phép đổi tên file/folder." },
+    { q: "Phát biểu nào không đúng trong các phát biểu sau?", options: ["Trong hệ điều hành Windows, thư mục có thể chứa các thư mục con khác.", "Trong hệ điều hành Windows, thư mục có thể chứa các tệp và thư mục con khác.", "Trong hệ điều hành Windows, tệp có thể chứa tệp.", "Trong hệ điều hành Windows, ổ đĩa có thể chứa thư mục và tệp."], correct: 2, explain: "Tệp tin (file) không thể chứa tệp tin con khác bên trong nó (chỉ thư mục mới có tính bao hàm)." },
+    { q: "Trong hệ điều hành Windows, để xoá các tệp\\thư mục đang chọn ta thực hiện như sau:", options: ["Nháy phải chuột, chọn UnDelete rồi bấm Yes.", "Nhấn tổ hợp phím Ctrl + Delete rồi bấm Yes.", "Nhấn phím Delete rồi bấm Yes", "Đáp án a, b, c đều đúng."], correct: 2, explain: "Nhấn Delete (hoặc phím Del) rồi xác nhận Yes." },
+    { q: "Trong hệ điều hành Windows, để dán các tệp\\thư mục ta thực hiện:", options: ["Nhấn tổ hợp phím Ctrl + V.", "Bấm phải chuột tại vùng trống bên trong ổ đĩa\\thư mục và chọn Paste.", "Các ý a và b đều đúng", "Các ý a và b đều sai"], correct: 2, explain: "Cả Ctrl + V và chuột phải chọn Paste đều thực hiện lệnh dán." },
+    { q: "Trong hệ điều hành Windows, để quản lý tệp, thư mục ta thường dùng:", options: ["Internet Explorer.", "Windows Explorer.", "Microsoft Word.", "Microsoft Excel."], correct: 1, explain: "Windows Explorer (hoặc File Explorer) là trình quản lý file/thư mục của hệ điều hành." },
+    { q: "Shortcut là gì?", options: ["Là chương trình được cài đặt vào máy tính giúp người dùng khởi động máy tính nhanh chóng.", "Là biểu tượng giúp người dùng truy cập nhanh vào đối tượng thường sử dụng.", "Là biểu tượng để mở cửa sổ My Computer.", "Là chương trình được cài đặt vào máy tính với mục đích hỗ trợ người sử dụng soạn thảo các văn bản tiếng Việt."], correct: 1, explain: "Shortcut là đường tắt/biểu tượng liên kết giúp mở nhanh file hoặc ứng dụng." },
+    { q: "Trong hệ điều hành Windows để cài đặt thiết bị (máy in, máy quét…), ta thực hiện như sau:", options: ["Control Panel\\Date and Time", "Control Panel\\Devices and Printers", "Control Panel\\Device Manager", "Control Panel\\Fax"], correct: 1, explain: "Vào Devices and Printers để thêm và cấu hình máy in, máy quét ngoại vi." },
+    { q: "Trong hệ điều hành Windows, muốn chọn tất cả các đối tượng trong cửa sổ thư mục hiện tại, ta nhấn tổ hợp phím?", options: ["Shift + F4", "Ctrl + A", "Alt + H", "F11"], correct: 1, explain: "Ctrl + A (Select All) chọn toàn bộ tệp và thư mục." }
+  ],
+  mod3: [
+    { q: "Trong MS Word 2010, để đặt lề giấy cho văn bản đang soạn thảo, ta chọn thẻ Page Layout\\Page Setup, rồi chọn:", options: ["Orientation", "Size", "Margins", "Page Setup"], correct: 2, explain: "Margins là tùy chọn căn lề (trên, dưới, trái, phải)." },
+    { q: "Trong MS Word 2010, để thay đổi hướng giấy in cho tài liệu ta chọn thẻ Page Layout\\Page Setup, rồi chọn:", options: ["Orientation", "Size", "Margins", "Page Setup"], correct: 0, explain: "Orientation cho phép chuyển đổi giữa hướng giấy dọc (Portrait) và ngang (Landscape)." },
+    { q: "Trong MS Word 2010, để chia cột cho đoạn văn bản ta thực hiện:", options: ["Tại thẻ Insert\\Page Setup\\Columns", "Tại thẻ Page Layout\\Page Setup\\Line Numbers", "Tại thẻ Page Layout\\Page Setup\\Columns", "Tại thẻ Home\\Page Setup\\Columns"], correct: 2, explain: "Tùy chọn chia cột Columns nằm ở thẻ Page Layout (nhóm Page Setup)." },
+    { q: "Trong MS Word 2010, để lưu văn bản ta dùng tổ hợp phím:", options: ["Ctrl + O", "Ctrl + P", "Ctrl + N", "Ctrl + S"], correct: 3, explain: "Ctrl + S dùng để lưu tệp tin (Save)." },
+    { q: "Khi sử dụng font chữ là: 'Time New Roman', để gõ được tiếng Việt, ta sử dụng bảng mã nào sau đây:", options: ["TCVN3 (ABC)", "VIQR", "VNI", "Unicode"], correct: 3, explain: "Times New Roman là font chuẩn quốc tế thuộc bảng mã Unicode." },
+    { q: "Trong MS Word 2010, để chèn chữ nghệ thuật vào văn bản ta thực hiện:", options: ["Tại thẻ Insert\\Text\\QuickPart", "Tại thẻ Insert\\Text\\ClipArt", "Tại thẻ Insert\\Text\\WordArt", "Tại thẻ Insert\\Text\\Equation"], correct: 2, explain: "WordArt là công cụ tạo chữ trang trí nghệ thuật." },
+    { q: "Trong MS Word 2010, để chèn một ảnh từ một tệp tin vào văn bản ta thực hiện:", options: ["Tại thẻ Insert\\Illustrations\\QuickPart", "Tại thẻ Insert\\Illustrations\\Picture", "Tại thẻ Insert\\Illustrations\\WordArt", "Tại thẻ Insert\\Illustrations\\Equation"], correct: 1, explain: "Insert -> Picture dùng để chèn hình ảnh từ ổ đĩa máy tính." },
+    { q: "Trong Bảng của MS Word 2010, để chèn thêm một hàng bên dưới hàng đang chọn thì ta vào thẻ Layout rồi chọn:", options: ["Insert Above", "Insert Below", "Rows Below", "Insert Right"], correct: 1, explain: "Insert Below chèn thêm một hàng ngay bên dưới hàng được chọn." },
+    { q: "Trong MS Word 2010, cách nhanh nhất để bôi đen toàn bộ văn bản là nhấn tổ hợp phím:", options: ["Ctrl + A", "Ctrl + E", "Shift + A", "Alt + A"], correct: 0, explain: "Ctrl + A bôi đen toàn bộ văn bản." },
+    { q: "Trong MS Word 2010, cách nhanh nhất để di chuyển con trỏ xuống cuối văn bản là nhấn tổ hợp phím:", options: ["Ctrl + Alt", "Ctrl + End", "Shift + End", "Alt + End"], correct: 1, explain: "Ctrl + End đưa con trỏ nhảy thẳng xuống cuối tài liệu." },
+    { q: "Trong MS Word 2010, để di chuyển con trỏ về cuối hàng ta sử dụng:", options: ["Page Down", "Ctrl + Page Down", "End", "Ctrl + End"], correct: 2, explain: "Phím End chuyển con trỏ đến cuối dòng hiện tại." },
+    { q: "Trong MS Word 2010, để chèn thêm một cột bên trái cột đang chọn thì ta vào thẻ Table Tools\\Layout rồi chọn:", options: ["Left Columns", "Insert Below", "Insert Above", "Insert Left"], correct: 3, explain: "Insert Left chèn thêm cột về bên trái cột đang trỏ." },
+    { q: "Trong MS Word 2010, sau khi bôi đen toàn bộ bảng, nếu nhấn phím Delete thì điều gì xảy ra?", options: ["Không có tác dụng gì", "Xóa toàn bộ nội dung và bảng biểu", "Xóa bảng, không xóa nội dung", "Xóa toàn bộ nội dung trong bảng, không xóa bảng"], correct: 3, explain: "Nhấn Delete chỉ xóa sạch chữ/dữ liệu trong các ô; nếu muốn xóa cả khung bảng phải dùng Backspace hoặc lệnh Delete Table." },
+    { q: "Mỗi tập tin MS Word 2010 được lưu lại sẽ có đuôi (phần mở rộng) mặc định là:", options: ["PDF", "DOCX", "XLS", "DOC"], correct: 1, explain: "Từ Word 2007 trở đi, định dạng lưu mặc định là .docx." },
+    { q: "Trong MS Word 2010, không thể lưu văn bản dưới định dạng là:", options: ["DOCX", "XLSX", "DOC", "PDF"], correct: 1, explain: "XLSX là định dạng bảng tính của Microsoft Excel." },
+    { q: "Trong MS Word 2010, khi cần gõ các chỉ số dưới (như X2, an, H2O) thì sử dụng phím tắt nào trong khi gõ:", options: ["Ctrl + “=”", "Ctrl + Shift + “+”", "Ctrl + Alt + Shift + “+”", "Shift + “+”"], correct: 0, explain: "Ctrl + '=' dùng để bật định dạng chỉ số dưới (Subscript)." },
+    { q: "Trong MS Word 2010, khi cần gõ các chỉ số trên (như X2, an) thì sử dụng phím tắt nào trong khi gõ:", options: ["Ctrl + “+”", "Ctrl + Shift + “+”", "Ctrl + Alt + Shift + “+”", "Shift + “+”"], correct: 1, explain: "Ctrl + Shift + '+' dùng để bật chỉ số trên (Superscript)." },
+    { q: "Trong MS Word 2010 tổ hợp phím Ctrl + P được thay cho lệnh nào dưới đây:", options: ["Vào File, chọn lệnh Save and Send", "Vào File, chọn Lệnh Save", "Vào File, chọn lệnh Print", "Vào File, chọn Lệnh Save As"], correct: 2, explain: "Ctrl + P là phím tắt mở giao diện In ấn (Print)." },
+    { q: "Trong MS Word 2010, để gộp các ô đang chọn của một bảng thành một ô thì ta gọi lệnh nào:", options: ["Vào thẻ Layout\\Merge\\Margin Cells", "Vào thẻ Layout\\Merge\\Split Table", "Vào thẻ Layout\\Merge\\Merge Cells", "Vào thẻ Layout\\Merge\\Split Cells"], correct: 2, explain: "Merge Cells dùng để gộp nhiều ô thành một." },
+    { q: "Trong MS Word 2010, phím nào để xóa ký tự đứng sau con trỏ văn bản:", options: ["Page Down", "Delete", "Page Up", "Backspace"], correct: 1, explain: "Delete xóa ký tự đứng sau con trỏ; Backspace xóa ký tự đứng trước." },
+    { q: "Trong soạn thảo MS Word 2010, muốn đánh dấu đầu đoạn văn bản bằng các ký tự đặc biệt, ta chọn:", options: ["Insert\\Symbol", "Home\\Paragraph\\Bullets", "Page\\Symbol", "File\\Paragraph\\Numbering"], correct: 1, explain: "Bullets là tính năng tạo ký hiệu đầu đoạn." },
+    { q: "Trong MS Word 2010, để tìm kiếm văn bản ta nhấn tổ hợp phím:", options: ["Ctrl + E", "Ctrl + F", "Ctrl + I", "Ctrl + K"], correct: 1, explain: "Ctrl + F (Find) dùng để tìm kiếm chuỗi văn bản." },
+    { q: "Trong MS Word 2010, để thay thế văn bản ta nhấn tổ hợp phím:", options: ["Ctrl + D", "Ctrl + H", "Ctrl + M", "Ctrl + Y"], correct: 1, explain: "Ctrl + H mở hộp thoại Replace (thay thế)." },
+    { q: "Trong MS Word 2010, để chèn biểu đồ, ta thực hiện:", options: ["Tại thẻ Insert\\Illustrations\\Shapes", "Tại thẻ Insert\\Illustrations\\Pictures", "Tại thẻ Insert\\Illustrations\\Chart", "Tại thẻ Insert\\Illustrations\\Equation"], correct: 2, explain: "Insert -> Chart dùng để vẽ biểu đồ." },
+    { q: "Trong MS Word 2010, khi nhấn tổ hợp phím nào sẽ thực hiện đóng văn bản hiện đang mở:", options: ["Ctrl + V", "Ctrl + W", "Alt + W", "Shift + W"], correct: 1, explain: "Ctrl + W đóng văn bản hiện hành." },
+    { q: "Trong MS Word 2010, để chèn một tiêu đề dưới vào tài liệu đang mở ta gọi lệnh gì:", options: ["Tại thẻ Insert, nhấn nút Footer, chọn một mẫu tiêu đề", "Tại thẻ Insert, nhấn nút Header, chọn một mẫu tiêu đề mới", "Tại thẻ Insert, nhấn nút Footer, chọn Remove Footert", "Tại thẻ Insert, nhấn nút Header, chọn Edit Header"], correct: 0, explain: "Footer là tiêu đề chân trang (cuối trang)." },
+    { q: "Trong MS Word 2010, Trong cửa sổ Print, ở lựa chọn Pages ta gõ 1-3 có nghĩa là:", options: ["Chỉ in trang 1 và trang 3", "In từ trang 1 đến trang 3", "Chỉ in trang 1", "Chỉ in trang 3"], correct: 1, explain: "Dấu gạch nối '-' chỉ khoảng trang liên tục (từ trang 1 đến 3)." },
+    { q: "Trong MS Word 2010, trong cửa sổ Print, ở lựa chọn Pages ta gõ 1,3 có nghĩa là:", options: ["Chỉ in trang 1 và trang 3", "In từ trang 1 đến trang 3", "Chỉ in trang 1", "Chỉ in trang 3"], correct: 0, explain: "Dấu phẩy ',' chỉ liệt kê các trang cụ thể cần in." }
+  ],
+  mod4: [
+    { q: "MS Excel 2010 có phần mở rộng mặc định là:", options: ["docx", "pdf", "xls", "xlsx"], correct: 3, explain: "File Excel 2010 có định dạng mặc định là .xlsx." },
+    { q: "Trong bảng tính Excel, để sửa dữ liệu trong một ô, sau khi chọn ô đó, có thể sử dụng phím:", options: ["F1", "F2", "F3", "F4"], correct: 1, explain: "Phím F2 kích hoạt chế độ chỉnh sửa trực tiếp nội dung trong ô." },
+    { q: "Trong các địa chỉ sau, địa chỉ nào biểu diễn sai:", options: ["D10", "$D10", "D$10", "10D"], correct: 3, explain: "Quy tắc địa chỉ ô phải là Tên Cột trước + Tên Dòng sau (D10, không thể là 10D)." },
+    { q: "Trong các địa chỉ vùng sau đây, địa chỉ vùng nào là địa chỉ tuyệt đối:", options: ["B$1:D$10", "B$1$:D$10$", "B1:D10", "$B$1:$D$10"], correct: 3, explain: "Địa chỉ tuyệt đối có ký hiệu $ ở trước cả chữ cột và số dòng ($B$1:$D$10)." },
+    { q: "Địa chỉ nào sau đây là địa chỉ vùng:", options: ["B1…D10", "B1;D10", "B1:D10", "B1.D10"], correct: 2, explain: "Địa chỉ vùng được ngăn cách bởi dấu hai chấm ':' (B1:D10)." },
+    { q: "Phát biểu nào sau đây là đúng?", options: ["Cột được chèn sẽ nằm bên phải cột đang chọn", "Cột được chèn sẽ nằm bên trái cột đang chọn", "Cột được chèn sẽ nằm cả bên trái và bên phải cột đang chọn", "Không thể chèn thêm cột trong Excel"], correct: 1, explain: "Trong Excel, khi chèn thêm cột mới (Insert Sheet Columns), cột mới luôn nằm bên trái." },
+    { q: "Hàm: MIN(50,500,5,100) sẽ cho kết quả là:", options: ["50", "100", "5", "500."], correct: 2, explain: "MIN trả về giá trị nhỏ nhất trong danh sách là 5." },
+    { q: "Hàm: =MAX(20,MIN(5,100)) sẽ cho kết quả là:", options: ["5", "20", "100", "Tất cả đều sai."], correct: 1, explain: "MIN(5,100) = 5. Tiếp tục =MAX(20, 5) trả về 20." },
+    { q: "Giả sử địa chỉ các ô A1, A2, A3 lần lượt có chứa các giá trị là: 30, “40”, 50. Lúc này hàm =SUM(A1:A3) sẽ có giá trị là:", options: ["70", "80", "90", "120"], correct: 1, explain: "'40' là chuỗi dạng văn bản (text) được truyền trong vùng tham chiếu A1:A3 nên hàm SUM bỏ qua, chỉ tính: 30 + 50 = 80." },
+    { q: "Hàm: =AVERAGE(10,20,30) cho kết quả là?", options: ["10", "15", "20", "25"], correct: 2, explain: "Trung bình cộng: (10 + 20 + 30) / 3 = 20." },
+    { q: "Trong Excel, các hàm AND, OR, NOT được gọi là:", options: ["Hàm của kiểu dữ liệu kiểu số", "Hàm của kiểu dữ liệu kiểu Logic", "Hàm của kiểu dữ liệu ngày", "Tất cả đều sai"], correct: 1, explain: "AND, OR, NOT là các hàm xử lý logic (cho kết quả True/False)." },
+    { q: "Hàm: =AND(50>40,100<200,20<15) cho kết quả là?", options: ["Name", "False", "True", "#Value!"], correct: 1, explain: "20 < 15 là False, hàm AND chỉ đúng khi tất cả các mệnh đề đúng nên trả về False." },
+    { q: "Cú pháp đúng của hàm IF là?", options: ["=IF(giá trị 1, điều kiện kiểm tra, giá trị 2)", "=IF(giá trị 2, điều kiện kiểm tra, giá trị 1)", "=IF(điều kiện kiểm tra, giá trị 1, giá trị 2)", "=IF(điều kiện kiểm tra, giá trị 1, giá trị 2, giá trị 3)"], correct: 2, explain: "Cú pháp: IF(logical_test, value_if_true, value_if_false)." },
+    { q: "Trong bảng tính Excel, tại ô A2 gõ vào công thức =IF(6>5,100,IF(5<6,200,300)) thì kết quả nhận được là:", options: ["100", "200", "300", "False"], correct: 0, explain: "Vì 6 > 5 là True, hàm dừng lại và nhận ngay giá trị thứ nhất là 100." },
+    { q: "Trong Excel, tại ô C2 gõ vào công thức: =IF(200>300,100,IF(300<500,200,300)) thì kết quả nhận được là:", options: ["100", "200", "300", "500"], correct: 1, explain: "200 > 300 là False -> nhảy sang vế sau: IF(300<500, 200, 300) là True -> trả về 200." },
+    { q: "Trong Excel, tại ô C2 gõ vào công thức: =IF(AND(50>20,60<40),1000,2000) thì kết quả nhận được là:", options: ["50", "60", "1000", "2000"], correct: 3, explain: "AND(True, False) cho kết quả False -> nhận giá trị nếu sai là 2000." },
+    { q: "Trong Excel, tại ô C8 gõ vào công thức: =IF(OR(10>20,30>40,50<60),70,80) thì kết quả nhận được là:", options: ["50", "60", "70", "80"], correct: 2, explain: "OR có một điều kiện 50<60 là True -> toàn bộ mệnh đề OR là True -> trả về 70." },
+    { q: "Trong Excel, tại ô A2 có giá trị là chuỗi TINHOCCOBAN. Tại ô B2 gõ hàm: =RIGHT(A2,5) thì nhận được kết quả là:", options: ["TINHOC", "BAN", "COBAN", "TIN"], correct: 2, explain: "Lấy 5 ký tự từ bên phải của 'TINHOCCOBAN' là 'COBAN'." },
+    { q: "Trong Excel, tại ô A2 có giá trị là chuỗi TINHOCCOBAN. Tại ô B2 gõ hàm: =LEFT(A2,6) thì nhận được kết quả là:", options: ["TINHOC", "HOCTIN", "HOC", "TIN"], correct: 0, explain: "Lấy 6 ký tự từ bên trái của chuỗi là 'TINHOC'." },
+    { q: "Hàm: =Mid() có bao nhiêu đối số :", options: ["1", "2", "3", "4"], correct: 2, explain: "MID(text, start_num, num_chars) gồm chính xác 3 đối số." },
+    { q: "Để có được chữ “TAN” của chuỗi “DAIHOCTANTRAO” ở tại địa chỉ ô B5. Ta dùng công thức nào sau đây:", options: ["=LEFT(RIGHT(B5,2),2)", "=RIGHT(LEFT(B5,2),2)", "=MID(B5,7,3)", "=MID(B5,3,7)"], correct: 2, explain: "Từ ký tự thứ 7 (chữ T), cắt lấy 3 ký tự là chuỗi 'TAN'." },
+    { q: "Hàm: =Vlookup() có bao nhiêu đối số:", options: ["3", "4", "5", "6"], correct: 1, explain: "VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup]) gồm 4 đối số." },
+    { q: "Với dữ liệu bảng dò theo chiều ngang, ta sử dụng hàm nào để dò tìm dữ liệu:", options: ["=hlook", "=hlookup", "=vlook", "=vlookup"], correct: 1, explain: "Dò tìm hàng ngang dùng HLOOKUP (Horizontal Lookup)." }
+  ],
+  mod5: [
+    { q: "Trong PowerPoint 2010, khi thiết kế bài trình diễn, thực hiện thao tác chọn Home\\New Slide để:", options: ["Chèn thêm một slide mới vào ngay trước slide hiện hành.", "Chèn thêm một slide mới vào ngay sau slide hiện hành.", "Chèn thêm một slide mới vào ngay trước slide đầu tiên.", "Chèn thêm một slide mới vào ngay sau slide cuối cùng."], correct: 1, explain: "Slide mới luôn được chèn vào vị trí ngay sau slide hiện đang chọn." },
+    { q: "Trong PowerPoint 2010, để tạo một slide giống hệt như slide hiện hành mà không phải thiết kế lại, ta chọn:", options: ["Design\\Duplicate.", "Insert\\New Slide.", "Home\\New Slide\\Duplicate Selected Slides.", "Không thực hiện được."], correct: 2, explain: "Duplicate Selected Slides dùng để nhân bản slide đang chọn." },
+    { q: "Trong PowerPoint 2010, muốn xóa slide hiện thời khỏi bài trình diễn, ta phải:", options: ["Chọn tất cả các đối tượng trên slide và nhấn phím Delete.", "Chọn tất cả các đối tượng trên slide và nhấn phím Backspace.", "Nhấn chuột phải lên slide ở phần danh sách slide, chọn Delete Slide.", "Nhấn chuột phải lên slide và chọn Delete."], correct: 2, explain: "Nhấp chuột phải vào slide ở thanh thu nhỏ bên trái và chọn Delete Slide." },
+    { q: "PowerPoint 2010 có phần mở rộng là gì?", options: ["docx", "xlsx", "html", "pptx"], correct: 3, explain: "Định dạng mặc định của PowerPoint 2010 là .pptx." },
+    { q: "Trong PowerPoint 2010, thực hiện thao tác chọn Animations\\Advance Animation\\Add Animation là để:", options: ["Tạo hiệu ứng động cho đối tượng đã được chọn trong slide.", "Tạo hiệu ứng chuyển trang cho các slide trong bài trình diễn.", "Đưa hình ảnh hoặc âm thanh vào bài trình diễn", "Định dạng cách bố trí các khối văn bản, hình ảnh, đồ thị ... cho một slide"], correct: 0, explain: "Animations là hiệu ứng cho từng đối tượng (chữ, ảnh, hình vẽ) trên trang slide." },
+    { q: "Trong PowerPoint 2010, tổ hợp phím Ctrl + M có chức năng gì?", options: ["Xóa một slide.", "Thêm một slide vào vị trí bên dưới slide hiện thời.", "Thêm một slide lên vị trí bên trên slide hiện thời.", "Đổi tên slide."], correct: 1, explain: "Ctrl + M là phím tắt chèn thêm slide mới ngay phía dưới." },
+    { q: "Trong PowerPoint 2010, để chèn số trang vào cuối slide, ta chọn:", options: ["Insert\\Text\\Slide Number", "View\\Header & Footer", "View\\Header", "Insert\\Footer"], correct: 0, explain: "Chọn thẻ Insert -> nhóm Text -> Slide Number." },
+    { q: "Trong PowerPoint 2010, để trình chiếu slide hiện thời, ta thực hiện:", options: ["Alt + F5.", "Shift + F5.", "Ctrl + F5.", "Tab + F5."], correct: 1, explain: "F5 là trình chiếu từ đầu, Shift + F5 là trình chiếu từ slide hiện hành." },
+    { q: "Trong PowerPoint 2010, để tạo hiệu ứng khi chuyển trang, ta chọn:", options: ["Transitons\\Transiton to This Slide\\Chọn hiệu ứng", "Slide Show\\Transiton to This Slide\\Chọn hiệu ứng", "Animations\\Transiton to This Slide\\Chọn hiệu ứng", "Insert\\Transiton to This Slide\\Chọn hiệu ứng"], correct: 0, explain: "Transitions là thẻ thiết lập hiệu ứng chuyển tiếp giữa các slide." },
+    { q: "Trong PowerPoint 2010, chức năng Design\\Themes dùng để:", options: ["Định dạng hiệu ứng chuyển trang.", "Định dạng giao diện của slide.", "Định dạng hiệu ứng cho các đối tượng trong slide.", "Định dạng thời gian trình chiếu."], correct: 1, explain: "Themes cung cấp các mẫu màu sắc, font và bố cục giao diện tổng thể." },
+    { q: "Trong PowerPoint 2010, có mấy nhóm hiệu ứng:", options: ["2", "3", "4", "5"], correct: 2, explain: "Gồm 4 nhóm: Entrance (xuất hiện), Emphasis (nhấn mạnh), Exit (thoát) và Motion Paths (chuyển động theo đường dẫn)." },
+    { q: "Không có nhóm hiệu ứng nào trong PowerPoint 2010:", options: ["Exit.", "Emphasis.", "Entrance.", "Move."], correct: 3, explain: "Không có nhóm nào tên là 'Move' (nhóm chuyển động tên là Motion Paths)." },
+    { q: "Trong PowerPoint 2010, đang trình chiếu một bài trình diễn, muốn hủy bỏ chế độ trình diễn ta nhấn phím:", options: ["Tab", "Esc", "Home", "End"], correct: 1, explain: "Phím Escape (Esc) dùng để thoát khỏi màn hình trình chiếu." }
+  ],
+  mod6: [
+    { q: "Dịch vụ Internet được chính thức cung cấp tại Việt Nam vào năm nào?", options: ["1995.", "1996.", "1997.", "1998."], correct: 2, explain: "Internet chính thức hòa mạng tại Việt Nam vào ngày 19/11/1997." },
+    { q: "WWW là viết tắt của từ:", options: ["World Wide Wed.", "World Wide Web.", "World Wild Wed.", "Word Wide Web."], correct: 1, explain: "WWW: World Wide Web (Mạng lưới toàn cầu)." },
+    { q: "Chương trình dùng để xem các trang Web được gọi là:", options: ["Trình duyệt Web.", "Bộ duyệt Web.", "Chương trình xem Web.", "Phần mềm xem Web."], correct: 0, explain: "Phần mềm duyệt mạng được gọi là Trình duyệt Web (Web Browser)." },
+    { q: "Internet Explorer là gì?", options: ["Là một chuẩn mạng cục bộ.", "Là một trình duyệt web", "Là một thiết bị mạng.", "Tất cả các câu đều sai."], correct: 1, explain: "Internet Explorer là trình duyệt web do Microsoft phát triển." },
+    { q: "Thuật ngữ “Online” có nghĩa là:", options: ["Đang ngoại tuyến", "Đang trực tuyến", "Đang bận", "Đang rảnh rỗi"], correct: 1, explain: "Online nghĩa là đang trực tuyến (đang kết nối mạng)." },
+    { q: "Thuật ngữ “Offline” có nghĩa là:", options: ["Đang ngoại tuyến", "Đang trực tuyến", "Đang bận", "Đang rảnh rỗi"], correct: 0, explain: "Offline nghĩa là ngoại tuyến (không kết nối mạng)." },
+    { q: "Download có nghĩa là:", options: ["Tải lên.", "Không tải.", "Trực tuyến.", "Tải xuống"], correct: 3, explain: "Download là thao tác tải tệp dữ liệu về máy tính." },
+    { q: "Trang tìm kiếm Google có thể cho ra kết quả tìm kiếm theo:", options: ["Hình ảnh.", "Video.", "Web.", "Đáp án a, b, c đều đúng"], correct: 3, explain: "Google hỗ trợ tìm kiếm đa dạng: văn bản web, hình ảnh, video, bản đồ..." },
+    { q: "Trên trình duyệt Google Chrome, phím F5 có chức năng:", options: ["Ngừng tải trang web.", "Tải lại trang web.", "Đóng trang web.", "Mở thêm một trang web."], correct: 1, explain: "F5 (hoặc Ctrl + R) dùng để tải lại nội dung trang (Reload)." },
+    { q: "Thư mục hiển thị mặc định sau khi đăng nhập vào hộp thư của Gmail là:", options: ["Soạn thư mới", "Hộp thư đến", "Thư đã gửi (Mục đã gửi)", "Cả 3 câu trên đều không đúng"], correct: 1, explain: "Hộp thư đến (Inbox) luôn được mở mặc định khi vào Gmail." },
+    { q: "Dung lượng tối đa của tệp tin đính kèm trong hòm thư Gmail là:", options: ["10 MB", "15 MB", "20 MB", "25MB"], correct: 3, explain: "Gmail cho phép đính kèm tệp trực tiếp với dung lượng tối đa 25 MB." },
+    { q: "Tiêu đề của một thư điện tử được bắt đầu bằng 'Fwd:' có nghĩa là:", options: ["Thư rác", "Thư mới", "Thư hồi đáp", "Thư chuyển tiếp"], correct: 3, explain: "Fwd là viết tắt của Forward (chuyển tiếp thư từ người khác sang)." },
+    { q: "Trên hệ thống thư của Gmail, không thể đính kèm các tệp tin có phần mở rộng là:", options: ["docx", "xlsx", "pdf", "exe"], correct: 3, explain: "Gmail chặn gửi tệp thực thi .exe nhằm phòng ngừa phát tán virus mã độc." },
+    { q: "Địa chỉ email nào sau đây không đúng:", options: ["nguyenvan.thanh@yahoo.com", "tranvan_quang79@gmail.com", "trinh.van.tuan88@gmail.com", "Nguyễnthịhuyền1990@gmail.com"], correct: 3, explain: "Địa chỉ email tiêu chuẩn không được chứa chữ có dấu tiếng Việt." },
+    { q: "E-mail là viết tắt của cụm từ nào sau đây?", options: ["Exchange Mail", "Electronic Mail", "Electrical Mail", "Else Mail"], correct: 1, explain: "Email là Electronic Mail (Thư điện tử)." }
+  ]
+};
 
-let currentIndex = 0;
-let score = 0;
-let answered = false;
+let currentQuiz = [];
+let currentIdx = 0;
+let userScore = 0;
+let isAnswered = false;
 
-function loadQuestion() {
-  answered = false;
-  const current = quizData[currentIndex];
-  document.getElementById("progress").innerText = `Câu ${currentIndex + 1}/${quizData.length}`;
-  document.getElementById("question-text").innerText = `${currentIndex + 1}. ${current.q}`;
+function startQuiz(modKey) {
+  currentQuiz = allModules[modKey] || [];
+  if (currentQuiz.length === 0) return;
+  currentIdx = 0;
+  userScore = 0;
+  document.getElementById("menu-view").style.display = "none";
+  document.getElementById("quiz-view").style.display = "block";
+  renderQuestion();
+}
+
+function backToMenu() {
+  document.getElementById("quiz-view").style.display = "none";
+  document.getElementById("menu-view").style.display = "block";
+}
+
+function renderQuestion() {
+  isAnswered = false;
+  const item = currentQuiz[currentIdx];
+  document.getElementById("progress").innerText = `Câu ${currentIdx + 1}/${currentQuiz.length}`;
+  document.getElementById("score").innerText = `Điểm: ${userScore}`;
+  document.getElementById("question-text").innerText = `${currentIdx + 1}. ${item.q}`;
   document.getElementById("next-btn").disabled = true;
-  
-  const feedbackBox = document.getElementById("feedback-box");
-  feedbackBox.className = "feedback";
-  feedbackBox.innerText = "";
 
-  const optionsList = document.getElementById("options-list");
-  optionsList.innerHTML = "";
+  const fb = document.getElementById("feedback-box");
+  fb.className = "feedback";
+  fb.innerText = "";
 
-  current.options.forEach((opt, idx) => {
+  const list = document.getElementById("options-list");
+  list.innerHTML = "";
+
+  item.options.forEach((opt, idx) => {
     const li = document.createElement("li");
     const btn = document.createElement("button");
     btn.className = "btn-option";
     btn.innerText = opt;
-    btn.onclick = () => selectOption(idx, btn);
+    btn.onclick = () => handleSelect(idx, btn);
     li.appendChild(btn);
-    optionsList.appendChild(li);
+    list.appendChild(li);
   });
 }
 
-function selectOption(selectedIdx, btnElement) {
-  if (answered) return;
-  answered = true;
+function handleSelect(selectedIdx, btnEl) {
+  if (isAnswered) return;
+  isAnswered = true;
 
-  const current = quizData[currentIndex];
-  const buttons = document.querySelectorAll(".btn-option");
+  const item = currentQuiz[currentIdx];
+  const allBtns = document.querySelectorAll(".btn-option");
 
-  if (selectedIdx === current.correct) {
-    btnElement.classList.add("correct");
-    score++;
-    document.getElementById("score").innerText = `Điểm: ${score}`;
+  if (selectedIdx === item.correct) {
+    btnEl.classList.add("correct");
+    userScore++;
+    document.getElementById("score").innerText = `Điểm: ${userScore}`;
   } else {
-    btnElement.classList.add("wrong");
-    buttons[current.correct].classList.add("correct");
+    btnEl.classList.add("wrong");
+    allBtns[item.correct].classList.add("correct");
   }
 
-  buttons.forEach(b => b.style.pointerEvents = "none");
+  allBtns.forEach(b => b.style.pointerEvents = "none");
 
-  const feedbackBox = document.getElementById("feedback-box");
-  feedbackBox.innerText = "👉 Giải thích: " + current.explain;
-  feedbackBox.classList.add("show");
+  const fb = document.getElementById("feedback-box");
+  fb.innerText = "💡 Giải thích: " + item.explain;
+  fb.classList.add("show");
 
   document.getElementById("next-btn").disabled = false;
 }
 
 function nextQuestion() {
-  if (currentIndex < quizData.length - 1) {
-    currentIndex++;
-    loadQuestion();
+  if (currentIdx < currentQuiz.length - 1) {
+    currentIdx++;
+    renderQuestion();
   } else {
-    document.getElementById("quiz-container").innerHTML = `
-      <h2 style="text-align:center; color:#1e293b;">Hoàn thành bài ôn tập!</h2>
-      <p style="text-align:center; font-size:1.25rem; margin:15px 0;">Kết quả của bạn: <b style="color:#4f46e5;">${score}/${quizData.length}</b></p>
-      <div style="text-align:center; margin-top:25px;">
-        <button class="btn-next" onclick="location.reload()">Làm lại bài</button>
+    document.getElementById("quiz-view").innerHTML = `
+      <div style="text-align:center; padding: 20px 0;">
+        <h2 style="color: #0f172a;">Hoàn thành bài ôn tập!</h2>
+        <p style="font-size: 1.3rem; margin: 15px 0;">Điểm số của bạn: <b style="color: #4f46e5;">${userScore}/${currentQuiz.length}</b></p>
+        <div style="margin-top: 25px;">
+          <button class="btn-primary" onclick="location.reload()">Chọn bài khác</button>
+        </div>
       </div>
     `;
   }
 }
-
-loadQuestion();
 </script>
 </body>
 </html>
