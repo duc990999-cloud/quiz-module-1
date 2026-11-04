@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ôn Tập Module 1 - Tin Học Cơ Bản</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 750px; margin: 30px auto; padding: 0 15px; background: #f4f6f8; color: #333; }
+    .quiz-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+    .question-title { font-size: 1.15rem; font-weight: 600; margin-bottom: 15px; line-height: 1.5; }
+    .options { list-style: none; padding: 0; }
+    .options li { margin-bottom: 10px; }
+    .btn-option { width: 100%; text-align: left; padding: 12px 16px; border: 1px solid #dcdfe6; border-radius: 8px; background: white; cursor: pointer; font-size: 1rem; transition: 0.2s; }
+    .btn-option:hover { background: #eef2ff; border-color: #6366f1; }
+    .btn-option.correct { background: #dcfce7 !important; border-color: #22c55e !important; color: #15803d !important; font-weight: 600; }
+    .btn-option.wrong { background: #fee2e2 !important; border-color: #ef4444 !important; color: #b91c1c !important; }
+    .feedback { margin-top: 15px; padding: 12px; border-radius: 8px; font-size: 0.95rem; display: none; }
+    .feedback.show { display: block; background: #f8fafc; border-left: 4px solid #6366f1; }
+    .controls { margin-top: 20px; display: flex; justify-content: space-between; align-items: center; }
+    .btn-next { padding: 10px 20px; background: #4f46e5; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: 1rem; }
+    .btn-next:disabled { background: #cbd5e1; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+
+<div class="quiz-card">
+  <div id="quiz-container">
+    <div style="display:flex; justify-content:space-between; color:#6b7280; font-size:0.95rem; margin-bottom:12px;">
+      <span id="progress">Câu 1/29</span>
+      <span id="score">Điểm: 0</span>
+    </div>
+    <div class="question-title" id="question-text">Đang tải...</div>
+    <ul class="options" id="options-list"></ul>
+    <div class="feedback" id="feedback-box"></div>
+    <div class="controls">
+      <div></div>
+      <button class="btn-next" id="next-btn" onclick="nextQuestion()" disabled>Câu tiếp theo</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const quizData = [
+  {
+    q: "1MB (Megabyte) bằng:",
+    options: ["1024 GB", "1024 KB", "1000 KB", "1000 B"],
+    correct: 1,
+    explain: "1 MB = 1024 KB = 2^10 KB."
+  },
+  {
+    q: "1GB (Gigabyte) bằng:",
+    options: ["2^10 KB", "2^20 KB", "2^30 KB", "2^40 KB"],
+    correct: 1,
+    explain: "1 GB = 1024 MB = 1024 * 1024 KB = 2^20 KB."
+  },
+  {
+    q: "1 bit dùng mấy ký tự nhị phân để biểu diễn:",
+    options: ["1", "2", "3", "4"],
+    correct: 0,
+    explain: "1 bit chỉ biểu diễn 1 ký tự nhị phân duy nhất (0 hoặc 1)."
+  },
+  {
+    q: "1 byte bằng:",
+    options: ["2 bit", "4 bit", "7 bit", "8 bit"],
+    correct: 3,
+    explain: "1 Byte = 8 Bit."
+  },
+  {
+    q: "Trong các đơn vị đo thông tin sau, đơn vị đo thông tin nào nhỏ nhất?",
+    options: ["Byte", "Bit", "Kilobyte", "Megabyte"],
+    correct: 1,
+    explain: "Bit là đơn vị đo lường thông tin nhỏ nhất."
+  },
+  {
+    q: "Trong các đơn vị đo thông tin sau, đơn vị đo thông tin nào lớn nhất?",
+    options: ["Byte", "Bit", "Kilobyte", "Megabyte"],
+    correct: 3,
+    explain: "Thứ tự từ nhỏ đến lớn: Bit < Byte < Kilobyte < Megabyte."
+  },
+  {
+    q: "Khi mất điện, các thông tin lưu trữ trong các phần nào sau đây bị mất:",
+    options: ["RAM", "ROM", "CPU", "Đĩa cứng"],
+    correct: 0,
+    explain: "RAM là bộ nhớ tạm thời (volatile memory), mất dữ liệu khi ngắt điện."
+  },
+  {
+    q: "Bộ nhớ trong bao gồm:",
+    options: ["RAM", "ROM", "RAM và ROM", "CPU"],
+    correct: 2,
+    explain: "Bộ nhớ trong của máy tính gồm RAM và ROM."
+  },
+  {
+    q: "Đâu là thiết bị thuộc Bộ nhớ ngoài?",
+    options: ["RAM", "ROM", "CPU", "Đĩa cứng."],
+    correct: 3,
+    explain: "Đĩa cứng (HDD/SSD) thuộc bộ nhớ ngoài."
+  },
+  {
+    q: "Các thiết bị nào sau đây là thiết bị nhập của máy tính?",
+    options: ["Máy in", "Máy chiếu", "Webcam", "Màn hình"],
+    correct: 2,
+    explain: "Webcam là thiết bị nhập dữ liệu hình ảnh vào máy tính."
+  },
+  {
+    q: "Các thiết bị nào sau đây là thiết bị xuất của máy tính?",
+    options: ["Bàn phím", "Chuột", "Máy quét", "Màn hình"],
+    correct: 3,
+    explain: "Màn hình xuất dữ liệu hình ảnh cho người dùng xem."
+  },
+  {
+    q: "VoIP là tên viết tắt của:",
+    options: ["Dịch vụ tin nhắn ngắn", "Tin nhắn tức thời", "Đàm thoại qua giao thức Internet", "Thư điện tử"],
+    correct: 2,
+    explain: "VoIP: Voice over Internet Protocol."
+  },
+  {
+    q: "SMS là tên viết tắt của:",
+    options: ["Dịch vụ tin nhắn ngắn", "Tin nhắn tức thời", "Đàm thoại qua giao thức Internet", "Thư điện tử"],
+    correct: 0,
+    explain: "SMS: Short Message Service."
+  },
+  {
+    q: "IM là tên viết tắt của:",
+    options: ["Dịch vụ tin nhắn ngắn", "Tin nhắn tức thời", "Đàm thoại qua giao thức Internet", "Thư điện tử"],
+    correct: 1,
+    explain: "IM: Instant Messaging."
+  },
+  {
+    q: "Mật khẩu của người dùng sau khi nhập vào máy tính sẽ tự động chuyển thành ký tự nào?",
+    options: ["*", "•", "* hoặc •", "* và •"],
+    correct: 2,
+    explain: "Mật khẩu thường được che thành ký tự sao (*) hoặc chấm đen (•)."
+  },
+  {
+    q: "ROM trên máy tính là:",
+    options: ["Bộ nhớ lưu trữ tạm thời", "Bộ nhớ ngoài", "Bộ nhớ chỉ đọc", "Thiết bị nhập"],
+    correct: 2,
+    explain: "ROM là Read-Only Memory (Bộ nhớ chỉ đọc)."
+  },
+  {
+    q: "CPU của máy tính là:",
+    options: ["Bộ xử lý trung tâm", "Bộ nhớ ngoài", "Thiết bị xuất", "Thiết bị nhập"],
+    correct: 0,
+    explain: "CPU là Central Processing Unit (Bộ xử lý trung tâm)."
+  },
+  {
+    q: "CPU của máy tính gồm mấy thành phần chính:",
+    options: ["1", "2", "3", "4"],
+    correct: 2,
+    explain: "CPU gồm 3 phần chính: Khối điều khiển (CU), khối số học/logic (ALU), và thanh ghi (Registers)."
+  },
+  {
+    q: "RAM trên máy tính là:",
+    options: ["Bộ nhớ lưu trữ tạm thời", "Bộ nhớ ngoài", "Bộ nhớ chỉ đọc", "Thiết bị nhập"],
+    correct: 0,
+    explain: "RAM là bộ nhớ truy xuất ngẫu nhiên, lưu trữ tạm thời khi chương trình đang chạy."
+  },
+  {
+    q: "Thông tin và dữ liệu trong máy tính được biểu diễn bằng:",
+    options: ["Số thập phân", "Các ký tự", "Số nhị phân", "Các ký hiệu Latin"],
+    correct: 2,
+    explain: "Dữ liệu trong máy tính được mã hóa dưới dạng số nhị phân (gồm các bit 0 và 1)."
+  },
+  {
+    q: "Đâu là tên của một phần mềm độc hại",
+    options: ["Spyware", "Skyware", "Spider", "Smoke"],
+    correct: 0,
+    explain: "Spyware là phần mềm độc hại chuyên theo dõi người dùng."
+  },
+  {
+    q: "Đâu là tên của Sâu máy tính",
+    options: ["Spyware", "Worm", "Spider", "Adware"],
+    correct: 1,
+    explain: "Worm là sâu máy tính lây lan qua mạng."
+  },
+  {
+    q: "Đâu là tên của Phần mềm quảng cáo",
+    options: ["Spyware", "Netware", "Skinware", "Adware"],
+    correct: 3,
+    explain: "Adware là Advertising-supported software."
+  },
+  {
+    q: "Đâu là tên của Phần mềm gián điệp",
+    options: ["Rabbit", "Worm", "Spyware", "Adware"],
+    correct: 2,
+    explain: "Spyware là phần mềm gián điệp."
+  },
+  {
+    q: "Dịch vụ tin nhắn ngắn SMS cho phép chúng ta sử dụng tối đa bao nhiêu ký tự cho một tin nhắn:",
+    options: ["140 ký tự", "150 ký tự", "160 ký tự", "170 ký tự"],
+    correct: 2,
+    explain: "Chuẩn tin nhắn SMS không dấu tối đa 160 ký tự."
+  },
+  {
+    q: "Đâu là một phần mềm máy tính?",
+    options: ["RAM", "CPU", "Microsoft Word", "VGA"],
+    correct: 2,
+    explain: "Microsoft Word là phần mềm; RAM, CPU, VGA là phần cứng."
+  },
+  {
+    q: "Đâu không phải là đơn vị đo thông tin",
+    options: ["Bit", "Byte", "Kilobyte", "Kilomet"],
+    correct: 3,
+    explain: "Kilomet là đơn vị đo khoảng cách."
+  },
+  {
+    q: "Trong các phần mềm sau, phần mềm nào là phần mềm ứng dụng?",
+    options: ["Windows 7", "Microsoft Excel", "Linux", "MAC - OS"],
+    correct: 1,
+    explain: "Microsoft Excel là phần mềm bảng tính ứng dụng; các phương án còn lại là hệ điều hành."
+  },
+  {
+    q: "Phần mềm nào dưới đây không phải là phần mềm hệ thống?",
+    options: ["Microsoft - DOS.", "Microsoft Windows.", "Linux", "Microsoft PowerPoint."],
+    correct: 3,
+    explain: "PowerPoint là phần mềm ứng dụng, không phải phần mềm hệ thống."
+  }
+];
+
+let currentIndex = 0;
+let score = 0;
+let answered = false;
+
+function loadQuestion() {
+  answered = false;
+  const current = quizData[currentIndex];
+  document.getElementById("progress").innerText = `Câu ${currentIndex + 1}/${quizData.length}`;
+  document.getElementById("question-text").innerText = `${currentIndex + 1}. ${current.q}`;
+  document.getElementById("next-btn").disabled = true;
+  
+  const feedbackBox = document.getElementById("feedback-box");
+  feedbackBox.className = "feedback";
+  feedbackBox.innerText = "";
+
+  const optionsList = document.getElementById("options-list");
+  optionsList.innerHTML = "";
+
+  current.options.forEach((opt, idx) => {
+    const li = document.createElement("li");
+    const btn = document.createElement("button");
+    btn.className = "btn-option";
+    btn.innerText = opt;
+    btn.onclick = () => selectOption(idx, btn);
+    li.appendChild(btn);
+    optionsList.appendChild(li);
+  });
+}
+
+function selectOption(selectedIdx, btnElement) {
+  if (answered) return;
+  answered = true;
+
+  const current = quizData[currentIndex];
+  const buttons = document.querySelectorAll(".btn-option");
+
+  if (selectedIdx === current.correct) {
+    btnElement.classList.add("correct");
+    score++;
+    document.getElementById("score").innerText = `Điểm: ${score}`;
+  } else {
+    btnElement.classList.add("wrong");
+    buttons[current.correct].classList.add("correct");
+  }
+
+  buttons.forEach(b => b.style.pointerEvents = "none");
+
+  const feedbackBox = document.getElementById("feedback-box");
+  feedbackBox.innerText = "👉 Giải thích: " + current.explain;
+  feedbackBox.classList.add("show");
+
+  document.getElementById("next-btn").disabled = false;
+}
+
+function nextQuestion() {
+  if (currentIndex < quizData.length - 1) {
+    currentIndex++;
+    loadQuestion();
+  } else {
+    document.getElementById("quiz-container").innerHTML = `
+      <h2 style="text-align:center; color:#1e293b;">Hoàn thành bài ôn tập!</h2>
+      <p style="text-align:center; font-size:1.25rem; margin:15px 0;">Kết quả của bạn: <b style="color:#4f46e5;">${score}/${quizData.length}</b></p>
+      <div style="text-align:center; margin-top:25px;">
+        <button class="btn-next" onclick="location.reload()">Làm lại bài</button>
+      </div>
+    `;
+  }
+}
+
+loadQuestion();
+</script>
+</body>
+</html>
